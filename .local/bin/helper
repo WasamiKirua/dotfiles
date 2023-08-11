@@ -1,0 +1,30 @@
+#!/bin/bash
+
+### Set messages's color 
+OK="$(tput setaf 2)[OK]$(tput sgr0)"
+ERROR="$(tput setaf 1)[ERROR]$(tput sgr0)"
+NOTE="$(tput setaf 3)[NOTE]$(tput sgr0)"
+WARN="$(tput setaf 166)[WARN]$(tput sgr0)"
+CAT="$(tput setaf 6)[ACTION]$(tput sgr0)"
+ORANGE=$(tput setaf 166)
+YELLOW=$(tput setaf 3)
+RESET=$(tput sgr0)
+
+
+printf "\n${NOTE} Mod1 + , ---> Focus on Left Monitor.\n"
+printf "\n${NOTE} Mod1 + . ---> Focus on Right Monitor.\n"
+
+printf "\n${NOTE} Mod1 + Shift + , ---> Move Active window to Right Monitor.\n"
+printf "\n${NOTE} Mod1 + Shift + . ---> Move Active window to Left Monitor.\n"
+printf "\n${NOTE} Mod1 + Enter ---> ST Terminal.\n"
+printf "\n${NOTE} Mod1 + Shift + Enter ---> ST with Ranger.\n"
+printf "\n${NOTE} Mod1 + c ---> Google Chrome.\n"
+printf "\n${NOTE} Mod1 + Shift + c ---> Google Chrome Private.\n"
+printf "\n${NOTE} Mod1 + f ---> Firefox.\n"
+printf "\n${NOTE} Mod1 + Shift + f ---> Firefox Private.\n"
+printf "\n${NOTE} Mod1 + Space ---> Exec.\n"
+
+
+
+printf "\n${NOTE} alsamixer ---> Set Volume.\n"
+

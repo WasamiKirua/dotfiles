@@ -1,0 +1,28 @@
+# Nvidia and Cuda 
+
+git nano htop openssh linux-headers nvidia-dkms nvidia-settings nvidia-utils libva cuda cudnn
+
+# Mount Ext HDD
+
+/dev/vg1/volume_1                               /mnt            ext4            defaults        0 0
+
+# Dual Monitor Config
+xrandr --output DP-4 --primary --auto --output HDMI-0 --auto --left-of DP-4
+
+# Thunar & Co.
+thunar file-roller gvfs gvfs-smb sshfs thunar-volman tumbler thunar-archive-plugin lvm2 firefox ttf-font-awesome ttf-jetbrains-mono polkit libxft libxinerama xwallpaper zsh pyenv xcompmgr neofetch ueberzug
+
+# Audio
+pacman -S pulseaudio-alsa pulseaudio-jack 
+systemctl --user enable pulseaudio
+systemctl --user restart pulseaudio
+sudo pacman -S pamixer
+
+# Compile YAY
+git clone https://aur.archlinux.org/yay.git
+
+# Install Paywal
+yay -S python-pywal xdotool
+
+# Set Audio if needed
+alsamixer --> Set audio volume
