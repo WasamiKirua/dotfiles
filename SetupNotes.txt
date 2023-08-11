@@ -2,6 +2,9 @@
 
 git nano htop openssh linux-headers nvidia-dkms nvidia-settings nvidia-utils libva cuda cudnn
 
+# Compile YAY
+git clone https://aur.archlinux.org/yay.git
+
 # Mount Ext HDD
 
 /dev/vg1/volume_1                               /mnt            ext4            defaults        0 0
@@ -10,16 +13,19 @@ git nano htop openssh linux-headers nvidia-dkms nvidia-settings nvidia-utils lib
 xrandr --output DP-4 --primary --auto --output HDMI-0 --auto --left-of DP-4
 
 # Thunar & Co.
-thunar file-roller gvfs gvfs-smb sshfs thunar-volman tumbler thunar-archive-plugin lvm2 firefox ttf-font-awesome ttf-jetbrains-mono polkit libxft libxinerama xwallpaper zsh pyenv xcompmgr neofetch ueberzug
+thunar file-roller gvfs gvfs-smb sshfs thunar-volman tumbler thunar-archive-plugin 
+lvm2 firefox ttf-font-awesome ttf-jetbrains-mono polkit libxft ranger visual-studio-code-bin
+firefox discord telegram-desktop pipes.sh spotify tty-clock imv neovim neofetch networkmanager-openvpn
+libxinerama xwallpaper zsh pyenv xcompmgr neofetch ueberzug mpd cava whitesur-icon-theme-git
+whitesur-cursor-theme-git whitesur-gtk-theme-git papirus-icon-theme otf-font-awesome
+mpd nodejs npm tmux zsh docker pyenv tk bleachbit-cli
+
 
 # Audio
 pacman -S pulseaudio-alsa pulseaudio-jack 
 systemctl --user enable pulseaudio
 systemctl --user restart pulseaudio
 sudo pacman -S pamixer
-
-# Compile YAY
-git clone https://aur.archlinux.org/yay.git
 
 # Install Paywal
 yay -S python-pywal xdotool
