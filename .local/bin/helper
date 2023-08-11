@@ -25,6 +25,49 @@ printf "\n${NOTE} Mod1 + Shift + f ---> Firefox Private.\n"
 printf "\n${NOTE} Mod1 + Space ---> Exec.\n"
 
 
-
+printf "\n${ERROR} Alsamixer\n"
 printf "\n${NOTE} alsamixer ---> Set Volume.\n"
+
+
+printf "\n${ERROR} Tmux\n"
+
+printf "Open a new Session:"
+echo -e " tmux new -s my_session"
+echo ""
+
+echo -e "List open sessions: "
+echo -e " tmux ls"
+echo ""
+
+echo -e "Attach to a session: "
+echo -e " tmux attach -t my_session"
+echo ""
+
+echo -e "List Session while in an session: "
+echo -e " PREFIX + s"
+echo -e "To enter: PREFIX + w"
+echo ""
+
+echo -e "New window: "
+echo -e " CTRL SPACE + c"
+echo ""
+
+echo -e "Kill window: "
+echo -e " CTRL SPACE + &"
+echo ""
+
+echo -e "Change window: "
+echo -e " CTRL SPACE + 0,1,2"
+echo -e " CTRL SPACE + n / p"
+echo ""
+
+echo -e "Split current window horizontally: "
+echo -e " CTRL SPACE + %"
+echo ""
+
+echo -e "Split current window vertically: "
+echo -e " CTRL SPACE + \""
+
+echo -e "Exit from a session without kill it: "
+echo -e "CTRL + b + d"
 
