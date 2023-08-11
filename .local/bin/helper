@@ -71,3 +71,44 @@ echo -e " CTRL SPACE + \""
 echo -e "Exit from a session without kill it: "
 echo -e "CTRL + b + d"
 
+
+printf "\n${ERROR} Nvim\n"
+
+
+echo -e "${NOTE}Create a new file: "
+echo -e "${OK} a"
+echo ""
+
+echo -e "${NOTE}Mark a file: "
+echo -e "${OK} m"
+echo ""
+
+echo -e "${NOTE}Copy and Paste a file: "
+echo -e "$OK c - p"
+echo ""
+
+echo -e "${NOTE}Rename a file: "
+echo -e "${OK} r"
+echo ""
+
+echo -e "${NOTE}Split window horizontally: "
+echo -e "${OK} :sp"
+printf "${OK} SPACE + h"
+echo ""
+
+echo -e "${NOTE}Split window vertically: "
+echo -e "${OK} :vsp"
+echo ""
+
+echo -e "${OK} SPACE + v"
+echo ""
+
+echo -e "${NOTE}Python debugger, set breakpoint: "
+echo -e "${OK} d + b"
+echo ""
+
+echo -e "${NOTE}Python debugger run test: "
+echo -e "${OK} d + p + r"
+echo "" 
+
+
