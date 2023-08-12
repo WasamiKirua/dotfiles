@@ -1,0 +1,257 @@
+/* appearance */
+//# include 'colors/gruvbox.h'
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 5, .realgap = 5, .gappx = 5};
+static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;        /* 0 means no systray */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12:antialias=true:autohint:true","NotoColorEmoji:size=14:antialias=true:autohint=true" };
+static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=12";
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+
+
+
+
+static const char black[]			= "#000000";
+static const char dark[]    		= "#1d2021";
+static const char darkgrey[]		= "#3c3836";
+static const char midgrey[] 		= "#665c54";
+static const char white[]   		= "#f9f5d7";
+static const char green[]   		= "#98971a";
+static const char darkblue[]		= "#076678";
+static const char blue[]    		= "#458588";
+static const char lightblue[]       = "#83a598";
+static const char purple[]  	   	= "#d3869b";
+static const char orange[]  	   	= "#fe8019";
+static const char red[] 			= "#cc241d";
+static const char darkyellow[]      = "#d79921";
+static const char yellow[]          = "#98971a";
+
+
+static const char *colors[][3]      = {
+	/*                  fg     	     bg         	border   */
+        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+};
+
+static const char *const autostart[] = {
+	"polkit", NULL,
+};
+
+/* tagging */
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+static const Rule rules[] = {
+	/* xprop(1):
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+	 */
+	/* class      	 instance      title    tags mask     isfloating    monitor */
+	{ "Telegram",      NULL,     NULL,         4 << 3,       0,          -1 },
+        { "Spotify",       NULL,     NULL,         1 << 5,       0,          -1 },
+        { "Firefox",       NULL,     NULL,         1 << 2,       0,          -1 },
+        { "Chrome",        NULL,     NULL,         3,            0,          -1 },
+        { "St",            NULL,     NULL,         0,            0,          -1 },
+	{ "Gimp",   	   NULL,       NULL,       0,            1,           -1 },
+	{ "Sxiv",          NULL,       NULL,       0,            1,           -1 },
+	{ "scratchpad",    NULL,       NULL,       0,            1,           -1 },
+	{ "scratchpulse",  NULL,       NULL,       0,            1,           -1 },
+	{ "scratchlf",     NULL,       NULL,       0,            1,           -1 },
+	{ "scratchvifm",   NULL,       NULL,       0,            1,           -1 },
+	{ "scratchfzf",    NULL,       NULL,       0,            1,           -1 },
+	{ "Firefox",   	   NULL,       NULL,       2,            0,           -1 },
+};
+
+/* layout(s) */
+static const float mfact     	= 0.50; /* factor of master area size [0.05..0.95] */
+static const int nmaster     	= 1;    /* number of clients in master area */
+static const int resizehints 	= 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
+
+static const Layout layouts[] = {
+	/* symbol     arrange function */
+	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[M]",      monocle },
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
+};
+
+/* key definitions */
+#define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
+#define TAGKEYS(KEY,TAG) \
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+
+/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+//#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
+/* Constants */
+#define TERMINAL "st"
+#define BROWSER "firefox-esr"
+
+/* commands */
+static const char *dmenucmd[]  = { "dmenucommand.sh", NULL };
+static const char *altmenucmd[]  = { "scratch.sh", "fzf", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *alttermcmd[]  = { "alacritty", NULL };
+static const char *termfm[] = { TERMINAL, "-e", "vifmrun", NULL};
+static const char *alttermfm[] = { TERMINAL, "-e", "lfub", NULL};
+static const char *webcmd[]  = { BROWSER, NULL };
+static const char *privwebcmd[]  = { BROWSER, "--private", NULL };
+static const char *altwebcmd[]  = { "librewolf", NULL };
+static const char *privaltwebcmd[]  = { "librewolf", "--private", NULL };
+
+/* volume */
+static const char *volup[] = { "volctl", "increase", NULL };
+static const char *voldown[] = { "volctl", "decrease", NULL };
+static const char *volmoreup[] = { "volctl", "bigup", NULL };
+static const char *volmoredown[] = { "volctl", "bigdown", NULL };
+static const char *volmute[] = { "volctl", "toggle", NULL };
+
+/* laptop monitor brightness control */
+static const char *morebrighter[] = { "brightnessctl.sh", "bigup", NULL };
+static const char *moredimmer[] = { "brightnessctl.sh", "bigdown", NULL };
+static const char *brighter[] = { "brightnessctl.sh", "up", NULL };
+static const char *dimmer[] = { "brightnessctl.sh", "down", NULL };
+
+/* keyboard backlight control */
+static const char *kbdlight[] = { "kbdlight.sh", NULL };
+
+/* wifi control */
+static const char *wifi[] = { "wifi.sh", NULL };
+
+/* utilities */
+static const char *bgsel[] = { "bgsel.sh", NULL };
+static const char *vpnclient[] = { "/opt/piavpn/bin/pia-client", NULL };
+static const char *logoutscript[]  = { "wm-exit.sh", NULL };
+static const char *typethis[] = { "typethis.sh", NULL };
+static const char *bookmarkthis[] = { "bookmarkthis.sh", NULL };
+static const char *dmeditconfigs[] = { "dmeditconfigs.sh", NULL };
+static const char *lockscreen[] = { "lok", NULL };
+
+/* scratchpads */
+static const char *scratchpad[] = { "scratch.sh", "pad", NULL };
+static const char *scratchvifm[] = { "scratch.sh", "vifm", NULL };
+static const char *scratchlf[] = { "scratch.sh", "lf", NULL };
+static const char *scratchpulse[] = { "scratch.sh", "pulse", NULL };
+
+static const Key keys[] = {
+	/* modifier                     key        function        argument */
+	{ 0,            XF86XK_AudioRaiseVolume,    spawn,          {.v = volup } },		// raises volume
+    { 0,            XF86XK_AudioLowerVolume,    spawn,          {.v = voldown } },		// lowers volume
+    { 0,            XF86XK_AudioMute,           spawn,          {.v = volmute } },		// toggles mute
+	{ ShiftMask, 	        XF86XK_AudioRaiseVolume,    spawn,          {.v = volmoreup } },	// raises volume more
+    { ShiftMask,            XF86XK_AudioLowerVolume,    spawn,          {.v = volmoredown } },	// lowers volume more
+																						//
+	// MONITOR BRIGHTNESS CONTROL
+    { 0,            XF86XK_MonBrightnessUp,     spawn,          {.v = brighter } },		// increase screen brightness
+    { 0,            XF86XK_MonBrightnessDown,   spawn,          {.v = dimmer } },		// decrease screen brightness
+    { ShiftMask,       XF86XK_MonBrightnessUp,     spawn,          {.v = morebrighter } },	// increase screen brightness more
+    { ShiftMask,       XF86XK_MonBrightnessDown,   spawn,          {.v = moredimmer } },	// decrease screen brightness more
+																						//
+    // KEYBOARD BACKLIGHT CONTROL 
+	{ 0,            XF86XK_Tools,			   spawn,    	    {.v = kbdlight } },		// toggle keyboard backlight
+																						//
+	// WIFI CONTROL
+	{ 0,            XF86XK_WLAN,			   spawn,    	    {.v = wifi } },			// wifi dmenu script
+																						//
+	// ALTERNATIVE PROGRAMS
+    { ALTKEY,                       XK_Return, spawn,          {.v = alttermcmd } },	// launches alternate teminal
+    { ALTKEY,                       XK_w,      spawn,          {.v = altwebcmd } },		// launches alternate web browser
+    { ALTKEY|ShiftMask,             XK_w,      spawn,          {.v = privaltwebcmd } },	// launches alternate web browser private window
+    { ALTKEY,                       XK_b,      spawn,          {.v = bgsel } },			// launches background selector script
+    { ALTKEY,                       XK_F12,    spawn,          {.v = vpnclient } },		// launches pia-client
+    { ALTKEY,                       XK_f,      spawn,          {.v = alttermfm } },		// launches alternate file manager
+    { ALTKEY,                       XK_p,      spawn,          {.v = altmenucmd } }, 	// launches fzf dmenu replacement script
+	{ ALTKEY,                       XK_x,      killclient,     {0} },  					// COPY OF MOD+x keybinding below 
+
+    // SCRATCHPADS 
+	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = scratchpad } },	// launches floating scratchpad terminal window
+    { MODKEY|ControlMask,           XK_l,      spawn,          {.v = scratchlf } },		// launches floating lf terminal file manager window
+    { MODKEY|ControlMask,           XK_f,      spawn,          {.v = scratchvifm } },	// lanuches floating vifm terminal file manager window
+    { MODKEY|ControlMask,           XK_p,      spawn,          {.v = scratchpulse } },	// launches floating pulsemixer window
+
+	// CUSTOM KEYBINDINGS
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },		// launches dmenu with flags given above ^
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },		// launches default terminal 
+	{ MODKEY,                       XK_w,      spawn,          {.v = webcmd } },		// launches default web browser
+	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = privwebcmd } },	// launches default web browser private window
+	{ MODKEY,                       XK_Insert, spawn,          {.v = typethis } },		// launches paste script
+	{ MODKEY,                       XK_y,      spawn,          {.v = bookmarkthis } },	// launches copy script
+	{ MODKEY,                       XK_f,      spawn,          {.v = termfm } },		// launches vifm with image previews
+	{ MODKEY,                       XK_e,      spawn,          {.v = dmeditconfigs } },	// launches dmenu-edit-configs script
+	{ MODKEY|ShiftMask,             XK_Delete, spawn,          {.v = lockscreen } },	// launches lok script
+	
+	// WM CONTROLS
+	{ MODKEY,                       XK_b,      togglebar,      {0} },					// toggle statusbar visibility
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },			// change focus down
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },			// change focus up
+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },			// increment master area +1
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },			// decrement master area -1
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },			// grow stack area
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },			// grow master area
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },					// switch current window with master window
+	{ MODKEY,                       XK_Tab,    view,           {0} },					// switch to most recently used tag
+	{ MODKEY,                       XK_x,      killclient,     {0} },					// kill currently selected window
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },	// switch to layout 0 (tiling)
+	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },	// switch to layout 1 (floating)
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },	// switch to layout 2 (monocle)
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_space,  setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },					// toggle floating layout
+	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },			// view all windows on current tag	
+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },			// make current window sticky to all tags	
+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },			// shift focus to monitor left	
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },			// shift focus to monitor right	
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },			// move window to monitor left	
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },			// move window to monitor right	
+	
+	{ MODKEY|ShiftMask,				XK_j,	   setgaps,			{.i = -5 } },			// decrease gaps
+	{ MODKEY|ShiftMask,				XK_k,  	   setgaps,			{.i = +5 } },			// increase gaps
+	{ MODKEY|ShiftMask,				XK_r,      setgaps,			{.i = GAP_RESET } },	// reset gaps
+	{ MODKEY|ShiftMask,				XK_g,      setgaps,			{.i = GAP_TOGGLE } },	// toggle gaps
+
+	TAGKEYS(                        XK_1,                      0)
+	TAGKEYS(                        XK_2,                      1)
+	TAGKEYS(                        XK_3,                      2)
+	TAGKEYS(                        XK_4,                      3)
+	TAGKEYS(                        XK_5,                      4)
+	TAGKEYS(                        XK_6,                      5)
+	TAGKEYS(                        XK_7,                      6)
+	TAGKEYS(                        XK_8,                      7)
+	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = logoutscript } },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {0} },
+};
+
+/* button definitions */
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+static const Button buttons[] = {
+	/* click                event mask      button          function        argument */
+	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkTagBar,            0,              Button1,        view,           {0} },
+	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+};

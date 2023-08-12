@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=DWM suckless window manager
+Exec=$(which dwm)
+Icon=dwm.png
+Type=XSession
