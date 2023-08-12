@@ -37,11 +37,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      	 instance      title    tags mask     isfloating    monitor */
-        { "Telegram",      NULL,     NULL,       3,       0,           -1 },
-        { "Spotify",       NULL,     NULL,       5,       0,           -1 },
-        { "Firefox",       NULL,     NULL,       2,       0,           -1 },
-        { "Chrome",        NULL,     NULL,       3,            0,           -1 },
-        { "St",            NULL,     NULL,       0,            0,           -1 },
+        { "telegram-desktop",      NULL,     NULL,       3,       0,           -1 },
+        { "spotify",       NULL,     NULL,       5,       0,           -1 },
+        { "firefox",       NULL,     NULL,       2,       0,           -1 },
+        { "google-chrome-stable",        NULL,     NULL,       3,            0,           -1 },
+        { "st",            NULL,     NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
@@ -81,6 +81,14 @@ static const char *webcmd[]  = { "google-chrome-stable", NULL };
 static const char *privwebcmd[]  = { "google-chrome-stable", "--incognito", NULL };
 static const char *altwebcmd[]  = { "firefox", NULL };
 static const char *privaltwebcmd[]  = { "firefox", "--private-window", NULL };
+static const char *musiccmd[] = { "st -e ncmpcpp", NULL };
+static const char *play[] = { "ncmpcpp", "toggle" };
+static const char *stop[] = { "ncmpcpp", "stop" };
+static const char *prev[] = { "ncmpcpp", "prev" };
+static const char *next[] = { "ncmpcpp", "next" };
+static const char *mute[] = { "amixer", "-q", "set", "PCM", "toggle", NULL };
+static const char *volu[] = { "amixer", "-q", "set", "PCM", "5%+", "unmute", NULL };
+static const char *vold[] = { "amixer", "-q", "set", "PCM", "5%-", "unmute", NULL };
 
 static const Key keys[] = {
    /* modifier                     key        function        argument */
@@ -94,6 +102,7 @@ static const Key keys[] = {
         { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = privwebcmd } },
         { MODKEY,                       XK_f,      spawn,          {.v = altwebcmd } },
         { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = privaltwebcmd } },
+        { MODKEY,                       XK_m,      spawn,          {.v = musiccmd } },
         { MODKEY,                       XK_g,      togglebar,      {0} },					// toggle statusbar visibility
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },			// change focus down
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },			// change focus up
@@ -114,6 +123,13 @@ static const Key keys[] = {
 	{ MODKEY,		        XK_k,  	   setgaps,	   {.i = +1 } },			// increase gaps
 	{ MODKEY|ShiftMask,		XK_equal,  setgaps,	   {.i = 0 } },	// reset gaps
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+        { MODKEY,                       XK_F6,     spawn,          {.v = play } },
+        { MODKEY,                       XK_F7,     spawn,          {.v = stop } },
+        { MODKEY,                       XK_F8,     spawn,          {.v = prev } },
+        { MODKEY,                       XK_F9,     spawn,          {.v = next } },
+        { MODKEY,                       XK_F10,    spawn,          {.v = mute } },
+        { MODKEY,                       XK_F11,    spawn,          {.v = vold } },
+        { MODKEY,                       XK_F12,    spawn,          {.v = volu } },
         TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

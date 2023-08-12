@@ -18,13 +18,14 @@ lvm2 firefox ttf-font-awesome ttf-jetbrains-mono polkit libxft ranger visual-stu
 firefox discord telegram-desktop pipes.sh spotify tty-clock imv neovim neofetch networkmanager-openvpn
 libxinerama xwallpaper zsh pyenv xcompmgr neofetch ueberzug mpd cava whitesur-icon-theme-git
 whitesur-cursor-theme-git whitesur-gtk-theme-git papirus-icon-theme otf-font-awesome
-mpd nodejs npm tmux zsh docker pyenv tk bleachbit-cli
+mpd ncmpcpp nodejs npm tmux zsh docker pyenv tk bleachbit-cli
 
 
 # Audio
 pacman -S pulseaudio-alsa pulseaudio-jack 
 systemctl --user enable pulseaudio
 systemctl --user restart pulseaudio
+systemctl --user enable mpd
 sudo pacman -S pamixer
 
 # Install Paywal
